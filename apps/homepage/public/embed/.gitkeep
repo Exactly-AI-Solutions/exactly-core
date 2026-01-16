@@ -1,0 +1,5 @@
+# Placeholder for chat widget embed assets
+# After building packages/chat-widget, copy:
+# - chat-widget.js (loader)
+# - chat-widget.umd.js (bundle)
+# - chat-widget.css (styles)

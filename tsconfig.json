@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "references": [
+    { "path": "./packages/types" },
+    { "path": "./packages/events" },
+    { "path": "./packages/auth" },
+    { "path": "./packages/db" },
+    { "path": "./packages/chat-components" },
+    { "path": "./packages/chat-widget" },
+    { "path": "./apps/chat-api" },
+    { "path": "./apps/homepage" },
+    { "path": "./apps/workflows-api" }
+  ]
+}

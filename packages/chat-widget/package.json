@@ -1,0 +1,28 @@
+{
+  "name": "@exactly/chat-widget",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./dist/chat-widget.umd.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && vite build --config vite.loader.config.ts",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@exactly/chat-components": "workspace:*",
+    "@exactly/types": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-calendly": "^4.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.6"
+  }
+}

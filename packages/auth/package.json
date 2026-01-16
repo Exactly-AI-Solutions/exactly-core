@@ -1,0 +1,31 @@
+{
+  "name": "@exactly/auth",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@exactly/types": "workspace:*"
+  },
+  "peerDependencies": {
+    "hono": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.14",
+    "hono": "^4.6.14",
+    "typescript": "^5.7.2"
+  }
+}

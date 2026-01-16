@@ -94,13 +94,13 @@ async function seed() {
       maxTokens: 4096,
       systemPrompt: exactlySystemPrompt,
       instructions: [],
-      tools: ['quickWins', 'scheduleConsultation'],
+      tools: [], // Tools are loaded via code, not database
     })
     .onConflictDoUpdate({
       target: agentConfigs.id,
       set: {
         systemPrompt: exactlySystemPrompt,
-        tools: ['quickWins', 'scheduleConsultation'],
+        model: 'gpt-5.2',
       },
     });
 

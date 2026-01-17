@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
-import type { DbClient } from '../client';
-import { tenants, type Tenant, type NewTenant } from '../schema/tenants';
+import type { DbClient } from '../client.js';
+import { tenants, type Tenant, type NewTenant } from '../schema/tenants.js';
 
 /**
  * Repository for tenant operations

@@ -1,7 +1,7 @@
 import { eq, and, gt, lt, sql } from 'drizzle-orm';
-import type { DbClient } from '../client';
-import { handoffs, type Handoff, type NewHandoff } from '../schema/handoffs';
-import { generateShareToken } from './utils/token';
+import type { DbClient } from '../client.js';
+import { handoffs, type Handoff, type NewHandoff } from '../schema/handoffs.js';
+import { generateShareToken } from './utils/token.js';
 
 /**
  * Repository for handoff operations

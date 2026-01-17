@@ -1,1 +1,1 @@
-export { createExactlyChatbotPrompt } from './exactly-chatbot';
+export { createExactlyChatbotPrompt } from './exactly-chatbot.js';

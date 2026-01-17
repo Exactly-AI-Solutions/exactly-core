@@ -5,6 +5,6 @@ export {
   type QuickWinType,
   type QuickWinResult,
   type GenerateQuickWinOptions,
-} from './agents';
+} from './agents.js';
 
-export { QUICK_WIN_PROMPTS } from './prompts';
+export { QUICK_WIN_PROMPTS } from './prompts.js';

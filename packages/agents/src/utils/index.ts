@@ -1,1 +1,1 @@
-export { scrapeHomepage, preprocessHtml, normalizeUrl } from './scraper';
+export { scrapeHomepage, preprocessHtml, normalizeUrl } from './scraper.js';

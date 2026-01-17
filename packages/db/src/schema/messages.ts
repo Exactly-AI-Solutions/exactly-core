@@ -1,5 +1,5 @@
 import { pgTable, text, timestamp, uuid, jsonb, boolean } from 'drizzle-orm/pg-core';
-import { chatSessions } from './sessions';
+import { chatSessions } from './sessions.js';
 import type { MessagePart, MessageAttachment } from '@exactly/types';
 
 export const chatMessages = pgTable('chat_messages', {

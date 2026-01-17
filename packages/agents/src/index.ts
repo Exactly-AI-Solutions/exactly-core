@@ -1,5 +1,5 @@
 // Tools
-export { quickWinsTool, scheduleConsultationTool } from './tools';
+export { quickWinsTool, scheduleConsultationTool } from './tools/index.js';
 
 // Quick Wins
 export {
@@ -10,15 +10,15 @@ export {
   type QuickWinType,
   type QuickWinResult,
   type GenerateQuickWinOptions,
-} from './quick-wins';
+} from './quick-wins/index.js';
 
 // Utilities
-export { scrapeHomepage, preprocessHtml, normalizeUrl } from './utils';
+export { scrapeHomepage, preprocessHtml, normalizeUrl } from './utils/index.js';
 
 // Prompts
-export { createExactlyChatbotPrompt } from './prompts';
+export { createExactlyChatbotPrompt } from './prompts/index.js';
 
 // All chatbot tools bundled for convenience
 export const chatbotTools = {
-  quickWins: async () => (await import('./tools/quick-wins')).quickWinsTool,
+  quickWins: async () => (await import('./tools/quick-wins.js')).quickWinsTool,
 };

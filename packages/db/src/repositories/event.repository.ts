@@ -1,6 +1,6 @@
 import { eq, isNull, lte } from 'drizzle-orm';
-import type { DbClient } from '../client';
-import { events, type Event, type NewEvent } from '../schema/events';
+import type { DbClient } from '../client.js';
+import { events, type Event, type NewEvent } from '../schema/events.js';
 
 /**
  * Repository for event operations

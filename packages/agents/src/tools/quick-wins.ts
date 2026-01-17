@@ -4,7 +4,7 @@ import {
   generateQuickWin,
   QUICK_WIN_TYPES,
   type QuickWinType,
-} from '../quick-wins';
+} from '../quick-wins/index.js';
 
 /**
  * Quick Wins tool - Generates strategic analysis reports for companies

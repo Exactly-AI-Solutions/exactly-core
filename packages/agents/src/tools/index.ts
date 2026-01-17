@@ -1,2 +1,2 @@
-export { quickWinsTool } from './quick-wins';
-export { scheduleConsultationTool } from './scheduling';
+export { quickWinsTool } from './quick-wins.js';
+export { scheduleConsultationTool } from './scheduling.js';

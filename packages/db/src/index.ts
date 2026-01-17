@@ -1,3 +1,3 @@
-export * from './schema';
-export * from './client';
-export * from './repositories';
+export * from './schema/index.js';
+export * from './client.js';
+export * from './repositories/index.js';

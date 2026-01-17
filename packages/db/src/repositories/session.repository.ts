@@ -1,6 +1,6 @@
 import { eq, and } from 'drizzle-orm';
-import type { DbClient } from '../client';
-import { chatSessions, type ChatSession, type NewChatSession } from '../schema/sessions';
+import type { DbClient } from '../client.js';
+import { chatSessions, type ChatSession, type NewChatSession } from '../schema/sessions.js';
 
 /**
  * Repository for session operations

@@ -5,8 +5,8 @@
 
 import { generateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
-import { QUICK_WIN_PROMPTS } from './prompts';
-import { scrapeHomepage, normalizeUrl } from '../utils/scraper';
+import { QUICK_WIN_PROMPTS } from './prompts.js';
+import { scrapeHomepage, normalizeUrl } from '../utils/scraper.js';
 
 /**
  * Quick win types available

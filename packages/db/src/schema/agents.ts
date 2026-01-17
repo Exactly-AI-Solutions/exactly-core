@@ -1,5 +1,5 @@
 import { pgTable, text, timestamp, numeric, integer, jsonb } from 'drizzle-orm/pg-core';
-import { tenants } from './tenants';
+import { tenants } from './tenants.js';
 import type { ToolConfig } from '@exactly/types';
 
 export const agentConfigs = pgTable('agent_configs', {

@@ -1,5 +1,5 @@
 import { pgTable, text, timestamp, uuid, jsonb, boolean, integer, index } from 'drizzle-orm/pg-core';
-import { tenants } from './tenants';
+import { tenants } from './tenants.js';
 
 /**
  * Email Handoffs - Pre-seeded conversation contexts with shareable links

@@ -1,5 +1,5 @@
 import { eq, asc } from 'drizzle-orm';
-import type { DbClient } from '../client';
+import type { DbClient } from '../client.js';
 import {
   chatMessages,
   messageVotes,
@@ -7,7 +7,7 @@ import {
   type NewChatMessage,
   type MessageVote,
   type NewMessageVote,
-} from '../schema/messages';
+} from '../schema/messages.js';
 
 /**
  * Repository for message operations

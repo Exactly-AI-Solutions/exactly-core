@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
-import type { DbClient } from '../client';
-import { agentConfigs, type AgentConfig, type NewAgentConfig } from '../schema/agents';
+import type { DbClient } from '../client.js';
+import { agentConfigs, type AgentConfig, type NewAgentConfig } from '../schema/agents.js';
 
 /**
  * Repository for agent configuration operations

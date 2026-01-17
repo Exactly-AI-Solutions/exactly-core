@@ -1,6 +1,6 @@
-import { initDb } from './client';
-import { tenants } from './schema/tenants';
-import { agentConfigs } from './schema/agents';
+import { initDb } from './client.js';
+import { tenants } from './schema/tenants.js';
+import { agentConfigs } from './schema/agents.js';
 import { createExactlyChatbotPrompt } from '@exactly/agents';
 
 async function seed() {

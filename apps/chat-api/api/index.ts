@@ -1,4 +1,6 @@
-import { handle } from '@hono/node-server/vercel';
 import app from '../dist/app.js';
 
-export default handle(app);
+// Debug: log runtime info
+console.log('runtime:', process.version, 'bun?', (globalThis as any).Bun ? 'yes' : 'no');
+
+export default app;

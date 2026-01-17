@@ -8,40 +8,14 @@ import { createExactlyChatbotPrompt } from '@exactly/agents';
 
 export const chatRoutes = new Hono<SessionEnv>();
 
-// GET /api/v1/chat/test - Simple test endpoint
-chatRoutes.get('/test', async (c) => {
-  console.log('[Chat] Test endpoint hit');
-  return c.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// POST /api/v1/chat/test - Test POST with body parsing
-chatRoutes.post('/test', async (c) => {
-  console.log('[Chat] Test POST started');
-  const body = await c.req.json();
-  console.log('[Chat] Test POST body parsed:', body);
-  return c.json({ status: 'ok', received: body });
-});
-
 // POST /api/v1/chat - Send message and receive streaming response
 chatRoutes.post('/', async (c) => {
-  console.log('[Chat] Route handler started');
-
   // Get tenant and session from middleware context
   const tenantId = c.get('tenantId');
   const clientSessionId = c.get('sessionId');
-  console.log('[Chat] tenantId:', tenantId, 'sessionId:', clientSessionId);
 
-  console.log('[Chat] About to parse body...');
-  let body;
-  try {
-    body = await c.req.json();
-    console.log('[Chat] Body parsed successfully');
-  } catch (e) {
-    console.error('[Chat] Body parse error:', e);
-    return c.json({ error: 'Failed to parse request body' }, 400);
-  }
+  const body = await c.req.json();
   const { messages, handoffId } = body;
-  console.log('[Chat] Messages count:', messages?.length);
 
   if (!messages || !Array.isArray(messages)) {
     return c.json({ error: 'Invalid request body: messages required' }, 400);
@@ -50,7 +24,6 @@ chatRoutes.post('/', async (c) => {
   // Load handoff context if provided
   let handoffContext: string | undefined;
   if (handoffId) {
-    console.log('[Chat] Loading handoff:', handoffId);
     const handoff = await handoffRepository.findById(handoffId);
     if (handoff && handoff.tenantId === tenantId && handoff.isActive) {
       handoffContext = handoff.context;
@@ -60,9 +33,7 @@ chatRoutes.post('/', async (c) => {
   }
 
   // Get agent config for this tenant
-  console.log('[Chat] Fetching agent config for tenant:', tenantId);
   const agentConfig = await agentConfigRepository.findByTenantId(tenantId);
-  console.log('[Chat] Agent config loaded, model:', agentConfig?.model);
   if (!agentConfig) {
     return c.json({ error: 'No agent configured for this tenant' }, 404);
   }
@@ -73,9 +44,7 @@ chatRoutes.post('/', async (c) => {
     : agentConfig.systemPrompt;
 
   // Get or create database session
-  console.log('[Chat] Getting/creating session');
   const dbSession = await sessionRepository.getOrCreate(tenantId, clientSessionId);
-  console.log('[Chat] Session ready:', dbSession.id);
 
   // Get the last user message to save
   const lastMessage = messages[messages.length - 1];
@@ -84,13 +53,11 @@ chatRoutes.post('/', async (c) => {
   }
 
   // Save user message to database
-  console.log('[Chat] Saving user message');
   const userMessage = await messageRepository.create({
     sessionId: dbSession.id,
     role: 'user',
     content: lastMessage.content,
   });
-  console.log('[Chat] User message saved:', userMessage.id);
 
   // Convert messages to CoreMessage format
   const coreMessages: CoreMessage[] = messages.map((msg: { role: string; content: string }) => ({
@@ -98,14 +65,11 @@ chatRoutes.post('/', async (c) => {
     content: msg.content,
   }));
 
-  console.log('[Chat] Starting SSE stream');
   return streamSSE(c, async (stream) => {
-    console.log('[Chat] Inside SSE handler');
     let assistantContent = '';
     let assistantMessageId: string | null = null;
 
     try {
-      console.log('[Chat] Calling streamChat with model:', agentConfig.model);
       const result = await streamChat({
         messages: coreMessages,
         agentConfig: {
@@ -118,7 +82,6 @@ chatRoutes.post('/', async (c) => {
         handoffContext,
         enableTools: true,
       });
-      console.log('[Chat] streamChat returned, starting to iterate fullStream');
 
       // Use fullStream to handle both text and tool events
       for await (const part of result.fullStream) {

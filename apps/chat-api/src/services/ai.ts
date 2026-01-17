@@ -26,9 +26,6 @@ const chatbotTools: Record<string, CoreTool> = {
 };
 
 export async function streamChat({ messages, agentConfig, handoffContext, enableTools = true }: StreamChatOptions) {
-  console.log('[AI] streamChat called, model:', agentConfig.model);
-  console.log('[AI] OPENAI_API_KEY set:', !!process.env.OPENAI_API_KEY);
-
   const systemParts = [
     agentConfig.systemPrompt,
     ...agentConfig.instructions.map((instruction) => `- ${instruction}`),
@@ -46,7 +43,6 @@ export async function streamChat({ messages, agentConfig, handoffContext, enable
 
   const systemMessage = systemParts.join('\n\n');
 
-  console.log('[AI] Calling streamText with model:', agentConfig.model);
   const result = streamText({
     model: openai(agentConfig.model),
     system: systemMessage,
@@ -56,7 +52,6 @@ export async function streamChat({ messages, agentConfig, handoffContext, enable
     tools: enableTools ? chatbotTools : undefined,
     maxSteps: 5, // Allow multi-step tool usage
   });
-  console.log('[AI] streamText returned');
 
   return result;
 }

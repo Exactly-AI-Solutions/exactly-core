@@ -1,1 +1,1 @@
-export { sessionMiddleware, type SessionEnv } from './session';
+export { sessionMiddleware, type SessionEnv } from './session.js';

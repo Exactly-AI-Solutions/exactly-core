@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { tenantRepository, agentConfigRepository } from '../index';
+import { tenantRepository, agentConfigRepository } from '../index.js';
 import type { TenantUIConfig } from '@exactly/types';
 
 /**

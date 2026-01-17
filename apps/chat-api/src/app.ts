@@ -16,13 +16,13 @@ import {
   HandoffRepository,
 } from '@exactly/db';
 
-import { chatRoutes } from './routes/chat';
-import { tenantRoutes } from './routes/tenants';
-import { eventRoutes } from './routes/events';
-import { healthRoutes } from './routes/health';
-import { handoffRoutes, publicHandoffRoutes } from './routes/handoffs';
-import { adminRoutes } from './routes/admin';
-import { sessionMiddleware, type SessionEnv } from './middleware';
+import { chatRoutes } from './routes/chat.js';
+import { tenantRoutes } from './routes/tenants.js';
+import { eventRoutes } from './routes/events.js';
+import { healthRoutes } from './routes/health.js';
+import { handoffRoutes, publicHandoffRoutes } from './routes/handoffs.js';
+import { adminRoutes } from './routes/admin.js';
+import { sessionMiddleware, type SessionEnv } from './middleware.js';
 
 // Combined environment type
 type AppEnv = SessionEnv;

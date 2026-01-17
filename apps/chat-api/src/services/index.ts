@@ -1,1 +1,1 @@
-export { streamChat, type AgentConfig, type StreamChatOptions } from './ai';
+export { streamChat, type AgentConfig, type StreamChatOptions } from './ai.js';

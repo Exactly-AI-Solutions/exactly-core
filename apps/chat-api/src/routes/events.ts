@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import type { SessionEnv } from '../middleware';
-import { eventRepository } from '../index';
+import type { SessionEnv } from '../middleware.js';
+import { eventRepository } from '../index.js';
 
 // Allowed event types from widget
 const ALLOWED_EVENT_TYPES = [

@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import type { SessionEnv } from '../middleware';
-import { handoffRepository } from '../index';
+import type { SessionEnv } from '../middleware.js';
+import { handoffRepository } from '../index.js';
 import type {
   CreateHandoffRequest,
   CreateHandoffResponse,

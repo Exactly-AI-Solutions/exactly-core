@@ -1,4 +1,4 @@
-import app from './app';
+import app from './app.js';
 
 // Re-export repositories for use in routes
 export {
@@ -8,7 +8,7 @@ export {
   messageRepository,
   eventRepository,
   handoffRepository,
-} from './app';
+} from './app.js';
 
 const port = process.env.PORT || 3001;
 

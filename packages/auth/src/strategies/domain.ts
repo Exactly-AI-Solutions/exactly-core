@@ -1,5 +1,5 @@
-import type { AuthStrategy, AuthResult, TenantLookup } from '../types';
-import { isAllowedDomain } from '../utils';
+import type { AuthStrategy, AuthResult, TenantLookup } from '../types.js';
+import { isAllowedDomain } from '../utils.js';
 
 /**
  * Domain-based authentication strategy

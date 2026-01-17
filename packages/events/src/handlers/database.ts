@@ -1,5 +1,5 @@
 import type { BaseEvent } from '@exactly/types';
-import type { EventHandler } from '../emitter';
+import type { EventHandler } from '../emitter.js';
 
 /**
  * Event write function type - allows dependency injection of database write

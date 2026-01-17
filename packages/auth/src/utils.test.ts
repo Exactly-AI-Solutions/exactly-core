@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { isAllowedDomain } from './utils';
+import { isAllowedDomain } from './utils.js';
 
 describe('isAllowedDomain', () => {
   test('exact match', () => {

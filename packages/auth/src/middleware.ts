@@ -1,5 +1,5 @@
 import type { Context, Next, MiddlewareHandler } from 'hono';
-import type { AuthStrategy, AuthContext } from './types';
+import type { AuthStrategy, AuthContext } from './types.js';
 
 // Environment type for auth context
 export type AuthEnv = {

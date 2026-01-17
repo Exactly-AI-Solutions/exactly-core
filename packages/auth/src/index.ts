@@ -1,6 +1,6 @@
-export type { AuthStrategy, AuthResult, AuthContext, TenantLookup } from './types';
-export type { AuthEnv } from './middleware';
-export { DomainAuthStrategy } from './strategies/domain';
+export type { AuthStrategy, AuthResult, AuthContext, TenantLookup } from './types.js';
+export type { AuthEnv } from './middleware.js';
+export { DomainAuthStrategy } from './strategies/domain.js';
 // Future: export { JWTAuthStrategy } from './strategies/jwt';
-export { createAuthMiddleware } from './middleware';
-export { isAllowedDomain } from './utils';
+export { createAuthMiddleware } from './middleware.js';
+export { isAllowedDomain } from './utils.js';

@@ -1,4 +1,4 @@
-import type { AuthStrategy, AuthResult } from '../types';
+import type { AuthStrategy, AuthResult } from '../types.js';
 
 /**
  * JWT authentication strategy (placeholder for future implementation)

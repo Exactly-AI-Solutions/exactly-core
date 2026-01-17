@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import type { SessionEnv } from '../middleware/index.js';
-import { tenantRepository } from '../index.js';
+import { tenantRepository } from '../app.js';
 
 export const tenantRoutes = new Hono<SessionEnv>();
 

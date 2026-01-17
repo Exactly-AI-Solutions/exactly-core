@@ -75,12 +75,14 @@ function CalendlyWidget({ url }: { url: string }) {
 export default function InlineChat({
   initialMessage,
   onClose,
-  apiUrl,
+  apiUrl: rawApiUrl,
   tenantId,
   sessionId,
   messages,
   onMessagesChange,
 }: InlineChatProps) {
+  // Normalize API URL to remove trailing slashes
+  const apiUrl = rawApiUrl.replace(/\/+$/, '');
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);

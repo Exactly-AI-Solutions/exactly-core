@@ -89,7 +89,7 @@ async function seed() {
     .values({
       id: 'exactly-homepage-agent',
       tenantId: 'exactly-homepage',
-      model: 'gpt-5.2',
+      model: 'gpt-4o-mini',
       temperature: '0.7',
       maxTokens: 4096,
       systemPrompt: exactlySystemPrompt,
@@ -100,7 +100,7 @@ async function seed() {
       target: agentConfigs.id,
       set: {
         systemPrompt: exactlySystemPrompt,
-        model: 'gpt-5.2',
+        model: 'gpt-4o-mini',
       },
     });
 
@@ -110,7 +110,7 @@ async function seed() {
     .values({
       id: 'test-client-agent',
       tenantId: 'test-client',
-      model: 'gpt-5.2',
+      model: 'gpt-4o-mini',
       temperature: '0.7',
       maxTokens: 4096,
       systemPrompt: 'You are a helpful assistant for Test Client. Answer questions about their services.',

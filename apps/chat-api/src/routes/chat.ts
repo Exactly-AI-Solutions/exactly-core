@@ -8,6 +8,20 @@ import { createExactlyChatbotPrompt } from '@exactly/agents';
 
 export const chatRoutes = new Hono<SessionEnv>();
 
+// GET /api/v1/chat/test - Simple test endpoint
+chatRoutes.get('/test', async (c) => {
+  console.log('[Chat] Test endpoint hit');
+  return c.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// POST /api/v1/chat/test - Test POST with body parsing
+chatRoutes.post('/test', async (c) => {
+  console.log('[Chat] Test POST started');
+  const body = await c.req.json();
+  console.log('[Chat] Test POST body parsed:', body);
+  return c.json({ status: 'ok', received: body });
+});
+
 // POST /api/v1/chat - Send message and receive streaming response
 chatRoutes.post('/', async (c) => {
   console.log('[Chat] Route handler started');
@@ -17,9 +31,17 @@ chatRoutes.post('/', async (c) => {
   const clientSessionId = c.get('sessionId');
   console.log('[Chat] tenantId:', tenantId, 'sessionId:', clientSessionId);
 
-  const body = await c.req.json();
+  console.log('[Chat] About to parse body...');
+  let body;
+  try {
+    body = await c.req.json();
+    console.log('[Chat] Body parsed successfully');
+  } catch (e) {
+    console.error('[Chat] Body parse error:', e);
+    return c.json({ error: 'Failed to parse request body' }, 400);
+  }
   const { messages, handoffId } = body;
-  console.log('[Chat] Body parsed, messages count:', messages?.length);
+  console.log('[Chat] Messages count:', messages?.length);
 
   if (!messages || !Array.isArray(messages)) {
     return c.json({ error: 'Invalid request body: messages required' }, 400);

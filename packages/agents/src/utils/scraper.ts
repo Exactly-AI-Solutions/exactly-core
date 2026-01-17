@@ -98,7 +98,7 @@ export async function scrapeHomepage(url: string, timeout = 20000): Promise<stri
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const response = await fetch(url, {
+    const response = await globalThis.fetch(url, {
       headers: {
         'User-Agent': getRandomUserAgent(),
         Accept:
@@ -106,7 +106,7 @@ export async function scrapeHomepage(url: string, timeout = 20000): Promise<stri
         'Accept-Language': 'en-US,en;q=0.5',
       },
       signal: controller.signal,
-    });
+    }) as globalThis.Response;
 
     if (!response.ok) {
       throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);

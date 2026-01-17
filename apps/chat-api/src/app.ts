@@ -22,7 +22,7 @@ import { eventRoutes } from './routes/events.js';
 import { healthRoutes } from './routes/health.js';
 import { handoffRoutes, publicHandoffRoutes } from './routes/handoffs.js';
 import { adminRoutes } from './routes/admin.js';
-import { sessionMiddleware, type SessionEnv } from './middleware.js';
+import { sessionMiddleware, type SessionEnv } from './middleware/index.js';
 
 // Combined environment type
 type AppEnv = SessionEnv;

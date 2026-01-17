@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { streamSSE } from 'hono/streaming';
 import type { CoreMessage } from 'ai';
-import type { SessionEnv } from '../middleware.js';
+import type { SessionEnv } from '../middleware/index.js';
 import { streamChat } from '../services/ai.js';
 import { agentConfigRepository, sessionRepository, messageRepository, handoffRepository } from '../index.js';
 import { createExactlyChatbotPrompt } from '@exactly/agents';

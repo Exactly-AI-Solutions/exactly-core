@@ -20,7 +20,6 @@ export const QUICK_WIN_TYPES = [
   'AI in your Industry',
   'SEO Opportunities Report',
   'Weak CTA Detector',
-  'AI Sales Playbook',
 ] as const;
 
 export type QuickWinType = (typeof QUICK_WIN_TYPES)[number];

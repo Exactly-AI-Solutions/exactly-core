@@ -163,7 +163,6 @@ The list of quick wins available (use one of the following as the quick_win_type
 - "AI in your Industry"
 - "SEO Opportunities Report"
 - "Weak CTA Detector"
-- "AI Sales Playbook"
 
 When the quickWins tool returns a result, you MUST:
 1. Extract ONLY the "quick_win_content" field from the tool result

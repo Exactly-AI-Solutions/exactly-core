@@ -3,6 +3,14 @@
  * Fetches and preprocesses HTML from a given URL for AI analysis
  */
 
+// Minimal Response interface to avoid DOM type dependency
+interface FetchResponse {
+  ok: boolean;
+  status: number;
+  statusText: string;
+  text(): Promise<string>;
+}
+
 // Attributes to keep when preprocessing HTML
 const SAFE_ATTRS = new Set(['href', 'src', 'alt', 'title', 'type']);
 
@@ -98,15 +106,15 @@ export async function scrapeHomepage(url: string, timeout = 20000): Promise<stri
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const response = await globalThis.fetch(url, {
+    const response = (await fetch(url, {
       headers: {
         'User-Agent': getRandomUserAgent(),
         Accept:
           'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.5',
       },
-      signal: controller.signal,
-    }) as globalThis.Response;
+      signal: controller.signal as AbortSignal,
+    })) as unknown as FetchResponse;
 
     if (!response.ok) {
       throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);

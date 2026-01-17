@@ -2,6 +2,7 @@
   "name": "@exactly/chat-api",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "build": "tsc",

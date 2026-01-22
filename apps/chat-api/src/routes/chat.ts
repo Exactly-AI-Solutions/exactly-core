@@ -2,7 +2,7 @@ import { Hono } from 'hono';
 import { streamSSE } from 'hono/streaming';
 import type { CoreMessage } from 'ai';
 import type { SessionEnv } from '../middleware/index.js';
-import { streamChat } from '../services/ai.js';
+import { streamChat, generateSuggestions } from '../services/ai.js';
 import { agentConfigRepository, sessionRepository, messageRepository, handoffRepository } from '../app.js';
 import { createExactlyChatbotPrompt } from '@exactly/agents';
 
@@ -152,6 +152,18 @@ chatRoutes.post('/', async (c) => {
 
       // Get final usage stats
       const usage = await result.usage;
+
+      // Generate contextual suggestions (non-blocking, but we await to include in stream)
+      // This runs in parallel with the user reading the response
+      const suggestions = await generateSuggestions(coreMessages, assistantContent);
+      if (suggestions.length > 0) {
+        await stream.writeSSE({
+          data: JSON.stringify({
+            type: 'suggestions',
+            suggestions,
+          }),
+        });
+      }
 
       await stream.writeSSE({
         data: JSON.stringify({

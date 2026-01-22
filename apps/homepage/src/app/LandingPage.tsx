@@ -197,10 +197,10 @@ export default function ExactlyLandingFinal() {
       question: "What if I wanted a smart AI chatbot like this for my website?",
       leadIn: "You can.",
       content: [
-        "<strong>We build engaging AI chatbots</strong> for real websites, designed around your business and what you want the chatbot to handle — <strong>answering questions, guiding visitors, capturing leads, booking meetings, and improving conversion rates. It's all done-for-you.</strong>",
+        "<strong>We build engaging CRO Chatbots<sup>™</sup></strong> for real websites, designed around your business and what you want the chatbot to handle — <strong>answering questions, guiding visitors, capturing leads, booking meetings, and improving conversion rates. It's all done-for-you.</strong>",
         "If you're curious what this could look like for your site, you can request a chatbot demo below."
       ],
-      cta: "Show me a chatbot for my site"
+      cta: "Show me my CRO Chatbot™"
     },
     {
       id: 'faq8',
@@ -834,7 +834,7 @@ export default function ExactlyLandingFinal() {
                     textDecoration: 'none',
                     transition: 'color 0.2s',
                     cursor: 'pointer'
-                  }} onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.color = '#FF6B35'} onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}>Get A Chatbot</a>
+                  }} onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.color = '#FF6B35'} onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.color = '#FFFFFF'}>CRO Chatbot</a>
                 </nav>
               </div>
               

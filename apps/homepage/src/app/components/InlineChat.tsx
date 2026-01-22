@@ -23,11 +23,10 @@ interface InlineChatProps {
   onMessagesChange: (messages: Message[]) => void;
 }
 
-const suggestedActions = [
-  { label: 'Analyze my homepage', icon: '◉' },
-  { label: 'Generate a quick win', icon: '◉' },
-  { label: 'Estimate impact', icon: null },
-  { label: 'Learn about', icon: null },
+const defaultSuggestions = [
+  'Analyze my homepage',
+  'Generate a quick win',
+  'What can Exactly do?',
 ];
 
 // Filter out JSON tool results that may appear in message content
@@ -85,6 +84,9 @@ export default function InlineChat({
   const apiUrl = rawApiUrl.replace(/\/+$/, '');
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [suggestions, setSuggestions] = useState<string[]>(defaultSuggestions);
+  const [suggestionsVisible, setSuggestionsVisible] = useState(true);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const initialMessageSent = useRef(false);
@@ -108,6 +110,8 @@ export default function InlineChat({
     onMessagesChange(updatedMessages);
     setInput('');
     setIsLoading(true);
+    // Hide suggestions while loading
+    setSuggestionsVisible(false);
 
     try {
       const response = await fetch(`${apiUrl}/api/v1/chat`, {
@@ -161,6 +165,13 @@ export default function InlineChat({
                   ...updatedMessages,
                   { role: 'assistant', content: assistantContent, component: assistantComponent },
                 ]);
+              } else if (data.type === 'suggestions') {
+                // Update suggestions with contextual ones from AI
+                if (Array.isArray(data.suggestions) && data.suggestions.length > 0) {
+                  setSuggestions(data.suggestions);
+                  // Reveal suggestions with animation
+                  setTimeout(() => setSuggestionsVisible(true), 100);
+                }
               }
             } catch {
               // Ignore parse errors for incomplete chunks
@@ -174,6 +185,9 @@ export default function InlineChat({
         ...updatedMessages,
         { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' },
       ]);
+      // Show default suggestions on error
+      setSuggestions(defaultSuggestions);
+      setSuggestionsVisible(true);
     } finally {
       setIsLoading(false);
     }
@@ -196,6 +210,17 @@ export default function InlineChat({
 
   const handleSuggestedAction = (action: string) => {
     sendMessage(action, messages);
+  };
+
+  const handleCopy = async (content: string, index: number) => {
+    const cleanedContent = cleanMessageContent(content);
+    try {
+      await navigator.clipboard.writeText(cleanedContent);
+      setCopiedIndex(index);
+      setTimeout(() => setCopiedIndex(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
   };
 
   return (
@@ -258,6 +283,11 @@ export default function InlineChat({
           color: #FF6B35;
           text-decoration: underline;
         }
+        .suggestion-btn:hover:not(:disabled) {
+          border-color: #FF6B35;
+          color: #FF6B35;
+          background: #FFF5F2;
+        }
       `}</style>
 
       {/* Header */}
@@ -304,7 +334,8 @@ export default function InlineChat({
             key={idx}
             style={{
               display: 'flex',
-              justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
+              flexDirection: 'column',
+              alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start',
             }}
           >
             <div
@@ -342,6 +373,47 @@ export default function InlineChat({
                 </span>
               )}
             </div>
+            {/* Copy button underneath assistant messages */}
+            {msg.role === 'assistant' && msg.content && cleanMessageContent(msg.content) && (
+              <button
+                onClick={() => handleCopy(msg.content, idx)}
+                title={copiedIndex === idx ? 'Copied!' : 'Copy'}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: '4px',
+                  padding: '4px',
+                  background: 'transparent',
+                  border: 'none',
+                  borderRadius: '4px',
+                  color: copiedIndex === idx ? '#10B981' : '#9CA3AF',
+                  cursor: 'pointer',
+                  transition: 'color 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  if (copiedIndex !== idx) {
+                    e.currentTarget.style.color = '#6B7280';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (copiedIndex !== idx) {
+                    e.currentTarget.style.color = '#9CA3AF';
+                  }
+                }}
+              >
+                {copiedIndex === idx ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                )}
+              </button>
+            )}
           </div>
         ))}
       </div>
@@ -405,13 +477,17 @@ export default function InlineChat({
             gap: '8px',
             marginTop: '12px',
             justifyContent: 'center',
+            opacity: suggestionsVisible ? 1 : 0,
+            transform: suggestionsVisible ? 'translateY(0)' : 'translateY(8px)',
+            transition: 'opacity 0.3s ease, transform 0.3s ease',
           }}
         >
-          {suggestedActions.map((action, idx) => (
+          {suggestions.map((suggestion, idx) => (
             <button
-              key={idx}
-              onClick={() => handleSuggestedAction(action.label)}
-              disabled={isLoading}
+              key={`${suggestion}-${idx}`}
+              onClick={() => handleSuggestedAction(suggestion)}
+              disabled={isLoading || !suggestionsVisible}
+              className="suggestion-btn"
               style={{
                 background: 'white',
                 border: '1px solid #E5E7EB',
@@ -425,10 +501,12 @@ export default function InlineChat({
                 gap: '6px',
                 fontFamily: 'inherit',
                 transition: 'all 0.2s',
+                opacity: suggestionsVisible ? 1 : 0,
+                transform: suggestionsVisible ? 'translateY(0)' : 'translateY(4px)',
+                transitionDelay: `${idx * 50}ms`,
               }}
             >
-              {action.icon && <span style={{ color: '#FF6B35' }}>{action.icon}</span>}
-              {action.label}
+              {suggestion}
             </button>
           ))}
         </div>

@@ -10,9 +10,13 @@ import {
  * Quick Wins tool - Generates strategic analysis reports for companies
  * Uses local Vercel AI SDK agents to generate reports
  */
-// Regex to reject placeholder values
+// Validation helpers
+const isValidUrl = (val: string) => {
+  return /^https?:\/\/.+\..+/.test(val.trim());
+};
+
 const notPlaceholder = (val: string) => {
-  const placeholders = /^(unknown|n\/a|none|tbd|placeholder|example|test)$/i;
+  const placeholders = /^(unknown|n\/a|none|tbd|placeholder|example|test|company)$/i;
   return !placeholders.test(val.trim());
 };
 
@@ -34,7 +38,10 @@ export const quickWinsTool = tool({
       ),
     company_url: z
       .string()
-      .url('Must be a valid URL starting with http:// or https://')
+      .min(10)
+      .refine(isValidUrl, {
+        message: 'Must be a valid URL starting with http:// or https://',
+      })
       .refine(notPlaceholder, {
         message: 'Company URL must be provided by the user, not a placeholder',
       })

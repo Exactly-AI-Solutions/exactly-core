@@ -5,7 +5,11 @@ import { z } from 'zod';
  * Calendly URL for Exactly consultations
  * This should be configured via environment variable in production
  */
-const CALENDLY_URL = process.env.CALENDLY_URL || 'https://calendly.com/exactly-ai/consultation';
+const BASE_CALENDLY_URL =
+  process.env.CALENDLY_URL || 'https://calendly.com/exactlyaisolutions/15min';
+
+// Add params to hide event details header and make widget more compact
+const CALENDLY_URL = `${BASE_CALENDLY_URL}?hide_event_type_details=1&hide_gdpr_banner=1`;
 
 /**
  * Schedule Consultation tool

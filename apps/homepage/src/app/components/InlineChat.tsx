@@ -56,13 +56,18 @@ function CalendlyWidget({ url }: { url: string }) {
     }
   }, []);
 
+  // Ensure compact display params are added
+  const compactUrl = url.includes('hide_event_type_details')
+    ? url
+    : `${url}${url.includes('?') ? '&' : '?'}hide_event_type_details=1&hide_gdpr_banner=1`;
+
   return (
     <div
       className="calendly-inline-widget"
-      data-url={url}
+      data-url={compactUrl}
       style={{
         minWidth: '320px',
-        height: '400px',
+        height: '350px',
         marginTop: '12px',
         borderRadius: '8px',
         overflow: 'hidden',
